@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Landing</title>
+</head>
+<body>
+<div>
+    <h1>Search for Game</h1>
+    <form data-th-action="@{/search}" method="get">
+        <label for="name"></label><input type="text" name="name" id="name">
+        <button type="submit">Search</button>
+        <span data-th-if="${message != null}" data-th-text="${message}" style="color: red;"></span>
+    </form>
+</div>
+<div data-th-if="${game != null}">
+    Found:
+    <a data-th-href="@{/game/{id}(id=${game.id})}" data-th-text="${game.name}"></a>
+</div>
+<div data-th-unless="${game != null}">
+    <h2>Random 10 Games</h2>
+    <div data-th-each="g: ${games}" data-th-object="${g}">
+        <a data-th-href="@{/game/{id}(id=*{id})}" data-th-text="*{name}"></a><br>
+        <img data-th-src="*{image}" src="" alt="">
+        <br><br>
+    </div>
+</div>
+</body>
+</html>

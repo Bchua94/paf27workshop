@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title data-th-text="${game.name}"></title>
+</head>
+<body>
+<a href="/">< Back</a>
+<div data-th-object="${game}">
+    <h1 data-th-text="*{name}"></h1>
+    <img data-th-src="@{{img}(img=*{image})}" src="" alt="">
+    <ul>
+        <li>Ranking: <span data-th-text="*{ranking}"></span></li>
+        <li>Link: <a data-th-href="*{url}" target="_blank">Click me</a></li>
+        <li>Users Rated: <span data-th-text="*{usersRated}"></span></li>
+        <li>Year: <span data-th-text="*{year}"></span></li>
+
+    </ul>
+</div>
+<div>
+    <form data-th-action="@{/game/{id}/new-comment(id=${game.id})}" method="post">
+        <div><label for="text">Comment:</label> <textarea name="text" id="text" cols="30" rows="10"></textarea></div>
+        <div><label for="rating">Rating (1-10):</label> <input type="number" name="rating" id="rating" min="0" max="10"></div>
+        <div><label for="user">User:</label> <input type="text" name="user" id="user"></div>
+        <div><button type="submit">Submit</button></div>
+    </form>
+</div>
+<div data-th-if="${game.comments != null}">
+    <h2>Top Comments</h2>
+    <div data-th-each="comment: ${game.comments}" data-th-object="${comment}">
+        <hr>
+        <p data-th-text="*{text}"></p>
+        <small>
+            Rating: <span data-th-text="*{rating}"></span>
+            Posted by: <span data-th-text="*{user}"></span>
+        </small>
+    </div>
+</div>
+</body>
+</html>
